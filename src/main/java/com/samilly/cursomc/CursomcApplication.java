@@ -70,6 +70,11 @@ public class CursomcApplication implements CommandLineRunner{ //Essa interface i
 														// Acoes: Fazer com que o programa salve algumas infor no BD automaticamente para serem usadas posteriormente
 		Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
+		Categoria cat3 = new Categoria(null,"Cama, mesa e banho");
+		Categoria cat4 = new Categoria(null,"Jardinagem");
+		Categoria cat5 = new Categoria(null,"Eletrônicos");
+		Categoria cat6 = new Categoria(null,"Decoração");
+		Categoria cat7 = new Categoria(null,"Perfumaria");
 		
 		Produto p1 = new Produto(null,"Computador",2000.00);
 		Produto p2 = new Produto(null,"Impressora",800.00);
@@ -83,7 +88,7 @@ public class CursomcApplication implements CommandLineRunner{ //Essa interface i
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
 				
-		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1,cat2, cat3,cat4,cat5,cat6,cat7));
 		
 		prodRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
