@@ -24,11 +24,11 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET) //"GET" Para pegar/recuperar um dado, value para dizer que no endpoint tbm tera o id
-	public ResponseEntity<?> Listar(@PathVariable Integer id) { //A anotacao vem pra dizer que a variavel 'id' que estara no endpoint declarada na linha acima sera usada aqui
+	public ResponseEntity<Categoria> Listar(@PathVariable Integer id) { //A anotacao vem pra dizer que a variavel 'id' que estara no endpoint declarada na linha acima sera usada aqui
 		// o tipo 'ResponseEntity' eh para armazenar toda informacao que vier da requisicao, e a ? eh pra dizer que eh de qualquer tipo
 		
 		
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj); //.ok diz que a operacao ocorreu com sucesso e a resposta tera como corpo o obj que eu coloquei 
 	}
@@ -39,6 +39,15 @@ public class CategoriaResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}"). //pega a uri no novo recurso que foi inserido
 				buildAndExpand(obj.getId()).toUri(); //from current request eh para pegar o endereco da requisicao (localhost/categoria/...)
 		return ResponseEntity.created(uri).build(); //ja pega a uri 201 que eh a padrao para criacao
+	}
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
+		
 	}
 
 }

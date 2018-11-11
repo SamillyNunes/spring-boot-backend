@@ -15,7 +15,7 @@ public class PedidoService {
 	@Autowired // Essa anotacao serve para instanciar uma dependencia automaticamente
 	private PedidoRepository repo;
 	
-	public Pedido buscar(Integer id) {
+	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado! Id: "+id+
 				", Tipo: "+Pedido.class.getName())); //Se nao achar o id vai retornar uma excecao com a mensagem passada e eo id e o nome da categoria
