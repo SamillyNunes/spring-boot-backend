@@ -21,5 +21,10 @@ public class CategoriaService {
 				", Tipo: "+Categoria.class.getName())); //Se nao achar o id vai retornar uma excecao com a mensagem passada e eo id e o nome da categoria
 	}
 	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null); //para ter certeza que eh um objeto novo e nao uma atualizacao
+		return repo.save(obj);
+	}
+	
 	
 }

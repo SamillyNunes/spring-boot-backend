@@ -1,14 +1,17 @@
 package com.samilly.cursomc.resources;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.samilly.cursomc.domain.Categoria;
 import com.samilly.cursomc.services.CategoriaService;
@@ -28,6 +31,14 @@ public class CategoriaResource {
 		Categoria obj = service.buscar(id);
 		
 		return ResponseEntity.ok().body(obj); //.ok diz que a operacao ocorreu com sucesso e a resposta tera como corpo o obj que eu coloquei 
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj){ //RequestBody faz com que o Json seja convertido para elemento java
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}"). //pega a uri no novo recurso que foi inserido
+				buildAndExpand(obj.getId()).toUri(); //from current request eh para pegar o endereco da requisicao (localhost/categoria/...)
+		return ResponseEntity.created(uri).build(); //ja pega a uri 201 que eh a padrao para criacao
 	}
 
 }
