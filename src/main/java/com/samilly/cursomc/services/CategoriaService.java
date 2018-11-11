@@ -3,10 +3,12 @@ package com.samilly.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.samilly.cursomc.domain.Categoria;
 import com.samilly.cursomc.repositories.CategoriaRepository;
+import com.samilly.cursomc.services.exceptions.DataIntegrityException;
 import com.samilly.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,6 +31,16 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId()); //ja usa o metodo find pra verificar se esse objeto existe mesmo, caso contrario esse metodo ja lanca uma excecao
 		return repo.save(obj); //o save serve tanto pra inserir quanto pra atualizar. A diferenca eh que quando o id ta valendo nulo, ele insere, e quando nao ta nulo, ele atualiza
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}
 	}
 	
 	
